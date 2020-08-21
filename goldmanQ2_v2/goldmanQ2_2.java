@@ -1,0 +1,59 @@
+import java.util.*;
+import java.lang.Math.*;
+
+class goldmanQ2_2 {
+    // function to convert an integer from decimal to binary from and return as string
+    public String convertToBinaryAndInvert(Integer number)
+    {
+	StringBuilder sbr = new StringBuilder();
+	while( number > 0 )
+	{
+	    sbr.append( number % 2 );
+	    number = number / 2;
+	}
+	while( sbr.length() % 8 != 0 )
+	{
+	    sbr.append( "0" );
+	}
+	return sbr.toString();
+    }
+    // function to convert binary number string to integer and return it 
+    public Integer binaryToInteger( String binary )
+    {
+	int number = 0;
+	int n = binary.length();
+	for( int i = n - 1 ; i >= 0 ; i-- )
+	{
+	    int factor = (binary.charAt(i) == '1' ) ? 1 : 0;
+	    number = number + (int)( factor * Math.pow( 2, n - 1 - i ) );
+	}
+	return Integer.valueOf( number );
+    }
+    // function to invert a decimal number after padding it to N*8 bits and invert it 
+    public Integer invertDecimal(Integer number)
+    {
+	Integer result = binaryToInteger( convertToBinaryAndInvert( number ) );
+	return result;
+    }
+}
+
+class main {
+    public static void main(String[] args)
+    {
+	//int input = 0;
+	List<Integer> input = new ArrayList<>();
+	System.out.println( " please provide input integers that you want to be inverted. If multiple inputs are to be provided please have them space seperated \n" );
+	for( String str : args )
+	{
+	    input.add( Integer.parseInt( str ) );
+	}
+	goldmanQ2_2 gq = new goldmanQ2_2();
+	for( int i = 0 ; i < input.size() ; i++ )
+	{
+	    Integer result = gq.invertDecimal( input.get(i) );
+	    System.out.println( " provided input is: " + input.get(i) );
+	    System.out.println( " inverted output for " + input.get(i) + " is: " + result + "\n" );
+	    
+	}
+    }
+}
