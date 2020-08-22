@@ -71,6 +71,9 @@ public class PalindromeServiceImpl implements PalindromeService{
 		palindromeDAO.save(str);
 	}
 	public String getString(){
+		if( palindromeDAO.count() == 0 )
+			return "database is empty, please make a post request first.";
+
 		List<StringInfo> queryResult = (List<StringInfo>)palindromeDAO.findAll();
 		return queryResult.get(0).getString();
 		//return palindromeDAO.get();
